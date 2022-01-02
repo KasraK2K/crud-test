@@ -1,0 +1,44 @@
+syntax = "proto3";
+package customer;
+
+service CustomerService {
+  // Unary APIs
+  rpc FindCustomer(FindCustomerRequest) returns (FindCustomerResponse);
+  rpc FindOneCustomer(FindOneCustomerRequest) returns (FindOneCustomerResponse);
+  rpc CreateCustomer(CreateCustomerRequest) returns (CreateCustomerResponse);
+  rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse);
+  rpc DeleteCustomer(DeleteCustomerRequest) returns (DeleteCustomerResponse);
+}
+
+message Customer {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string date_of_birth = 4;
+  string phone_number = 5;
+  string email = 6;
+  string bank_account_number = 7;
+}
+
+// find
+message FindCustomerRequest { Customer customer = 1; }
+message FindCustomerResponse { repeated Customer customer = 1; }
+
+// findOne
+message FindOneCustomerRequest { Customer customer = 1; }
+message FindOneCustomerResponse { Customer customer = 1; }
+
+// create
+message CreateCustomerRequest { Customer customer = 1; }
+message CreateCustomerResponse { Customer customer = 1; }
+
+// update
+message UpdateCustomerRequest {
+  Customer customer = 1;
+  Customer update_customer_data = 2;
+}
+message UpdateCustomerResponse { string result = 1; }
+
+// delete
+message DeleteCustomerRequest { Customer customer = 1; }
+message DeleteCustomerResponse { string result = 1; }
