@@ -1,5 +1,5 @@
 {
-  "name": "recruiter-customer",
+  "name": "recruiter-database",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,7 @@
   "author": "Kasra Karami <kasra.job@yahoo.com>",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "google-protobuf": "^3.19.1",
     "grpc": "^1.24.11",
     "mongoose": "^6.1.4"
