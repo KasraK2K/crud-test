@@ -11,6 +11,11 @@ function customerGenerator(customerData) {
     .setBankAccountNumber(customerData.bankAccountNumber);
 }
 
+function customerListGenerator(customerListData) {
+  return customerListData.map((customer) => customerGenerator(customer));
+}
+
 module.exports = {
   customerGenerator,
+  customerListGenerator,
 };

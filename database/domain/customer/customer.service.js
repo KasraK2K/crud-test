@@ -2,7 +2,10 @@ const grpc = require("grpc");
 const customers = require("../../grpc/customer_pb");
 const customerRepository = require("./customer.repository");
 const emptyKeyRemover = require("../../common/utils/emptyKeyRemover");
-const { customerGenerator } = require("./customer.helper");
+const {
+  customerGenerator,
+  customerListGenerator,
+} = require("./customer.helper");
 
 async function findCustomer(call, callback) {
   const response = new customers.FindCustomerResponse();
@@ -18,10 +21,7 @@ async function findCustomer(call, callback) {
   let customersResponse;
   if (foundCustomers) {
     // add customers to response
-    customersResponse = foundCustomers.map((customer) => {
-      const customerResponse = customerGenerator(customer);
-      return customerResponse;
-    });
+    customersResponse = customerListGenerator(foundCustomers);
   }
   response.setCustomerList(customersResponse);
   callback(null, response);
