@@ -5,7 +5,7 @@ const {
   updateCustomer,
   deleteCustomer,
 } = require("./customer.service");
-const { customerGen, customerListGen } = require("./customer.helper");
+const { customerGetter, customerListGetter } = require("./customer.helper");
 
 class CustomerController {
   async find(req, res) {
@@ -15,7 +15,7 @@ class CustomerController {
     );
     if (hasError) return res.json(errors);
     client.findCustomer(request, (error, response) => {
-      if (!error) return res.json(customerListGen(response));
+      if (!error) return res.json(customerListGetter(response));
       else return res.json(error);
     });
   }
@@ -27,7 +27,7 @@ class CustomerController {
     );
     if (hasError) return res.json(errors);
     client.findOneCustomer(request, (error, response) => {
-      if (!error) return res.json(customerGen(response));
+      if (!error) return res.json(customerGetter(response));
       else return res.json(error);
     });
   }
@@ -39,7 +39,7 @@ class CustomerController {
     );
     if (hasError) return res.json(errors);
     client.createCustomer(request, (error, response) => {
-      if (!error) return res.json(customerGen(response));
+      if (!error) return res.json(customerGetter(response));
       else return res.json(error);
     });
   }
