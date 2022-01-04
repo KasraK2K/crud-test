@@ -353,7 +353,11 @@ export default {
     async handleCreate() {
       await customerService
         .create(this.createCustomer)
-        .then((response) => response.data.result)
+        .then((response) => {
+          if (response.status === 200) this.findAll();
+
+          return response.data.result;
+        })
         .catch((error) => console.log(error));
     },
 
@@ -362,17 +366,25 @@ export default {
         aggregate: this.aggregate,
         update: this.editedCustomer,
       };
-      console.log(updateData);
+
       await customerService
         .update(updateData)
-        .then((response) => response.data.result)
+        .then((response) => {
+          if (response.status === 200) this.findAll();
+
+          return response.data.result;
+        })
         .catch((error) => console.log(error.response));
     },
 
     async handleDelete() {
       await customerService
         .delete({ id: this.deleteId })
-        .then((response) => response.data.result)
+        .then((response) => {
+          if (response.status === 200) this.findAll();
+
+          return response.data.result;
+        })
         .catch((error) => console.log(error));
     },
   },
