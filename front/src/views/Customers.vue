@@ -138,7 +138,12 @@
             >
               Close
             </button>
-            <button class="btn btn-primary" type="button" @click="handleCreate">
+            <button
+              class="btn btn-primary"
+              type="button"
+              @click="handleCreate"
+              data-bs-dismiss="modal"
+            >
               Save changes
             </button>
           </div>
@@ -239,7 +244,12 @@
             >
               Close
             </button>
-            <button class="btn btn-primary" type="button" @click="handleUpdate">
+            <button
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              type="button"
+              @click="handleUpdate"
+            >
               Save changes
             </button>
           </div>
@@ -274,7 +284,12 @@
             >
               Close
             </button>
-            <button class="btn btn-danger" type="button" @click="handleDelete">
+            <button
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+              type="button"
+              @click="handleDelete"
+            >
               Delete Customer
             </button>
           </div>
