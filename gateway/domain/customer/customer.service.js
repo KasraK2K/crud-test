@@ -26,10 +26,6 @@ async function findOneCustomer(data) {
 async function createCustomer(data) {
   const request = new customers.CreateCustomerRequest();
   const customer = customerGenerator(data);
-
-  const { valid, errors } = validator(schema.customer.create, data);
-  if (!valid) return { hasError: true, errors };
-
   request.setCustomer(customer);
   return { client, request };
 }
