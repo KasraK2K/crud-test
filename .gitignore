@@ -110,3 +110,7 @@ database/package-lock.json
 # Gateway
 gateway/node_modules
 gateway/package-lock.json
+
+# Front
+front/node_modules
+front/package-lock.json
