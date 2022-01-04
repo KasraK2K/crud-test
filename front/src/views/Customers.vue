@@ -88,7 +88,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label" for="create-emailInput">
-                Email address
+                Email address*
               </label>
               <input
                 id="create-emailInput"
@@ -120,7 +120,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label" for="create-bankAccountNumber">
-                Bank Account Number
+                Bank Account Number*
               </label>
               <input
                 id="create-bankAccountNumber"
@@ -141,8 +141,9 @@
             <button
               class="btn btn-primary"
               type="button"
-              @click="handleCreate"
               data-bs-dismiss="modal"
+              :disabled="!isCreateValid"
+              @click="handleCreate"
             >
               Save changes
             </button>
@@ -248,6 +249,7 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
               type="button"
+              :disabled="!isEditValid"
               @click="handleUpdate"
             >
               Save changes
@@ -303,16 +305,12 @@
 import moment from "moment";
 import CustomerTableBody from "@/components/customers/CustomerTableBody.vue";
 import customerService from "../services/customer.service";
+import * as patterns from "@/constants/patterns";
 
 export default {
   name: "Home",
   components: { CustomerTableBody },
 
-  mounted() {
-    this.findAll();
-  },
-
-  // TODO: get Customers from api
   data() {
     return {
       customers: [],
@@ -328,6 +326,30 @@ export default {
         bankAccountNumber: "",
       },
     };
+  },
+
+  computed: {
+    isCreateValid() {
+      return (
+        this.createCustomer.email.length &&
+        patterns.email.test(this.createCustomer.email) &&
+        this.createCustomer.bankAccountNumber.length &&
+        patterns.bankAccountNumber.test(this.createCustomer.bankAccountNumber)
+      );
+    },
+    isEditValid() {
+      return (
+        Object.keys(this.editedCustomer).length &&
+        this.editedCustomer.email.length &&
+        patterns.email.test(this.editedCustomer.email) &&
+        this.editedCustomer.bankAccountNumber.length &&
+        patterns.bankAccountNumber.test(this.editedCustomer.bankAccountNumber)
+      );
+    },
+  },
+
+  mounted() {
+    this.findAll();
   },
 
   methods: {
