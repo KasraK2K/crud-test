@@ -102,7 +102,7 @@
               <label class="form-label" for="create-phoneInput">Phone</label>
               <input
                 id="create-phoneInput"
-                v-model.number="createCustomer.phoneNumber"
+                v-model="createCustomer.phoneNumber"
                 class="form-control"
                 placeholder="+48123456789"
                 type="text"
@@ -124,10 +124,9 @@
               </label>
               <input
                 id="create-bankAccountNumber"
-                v-model.number="createCustomer.bankAccountNumber"
+                v-model="createCustomer.bankAccountNumber"
                 class="form-control"
                 placeholder="9999999999999"
-                type="number"
               />
             </div>
           </div>
@@ -204,7 +203,7 @@
               <label class="form-label" for="phoneInput">Phone</label>
               <input
                 id="phoneInput"
-                v-model.number="editedCustomer.phoneNumber"
+                v-model="editedCustomer.phoneNumber"
                 class="form-control"
                 placeholder="+48123456789"
                 type="text"
@@ -226,10 +225,9 @@
               </label>
               <input
                 id="bankAccountNumber"
-                v-model.number="editedCustomer.bankAccountNumber"
+                v-model="editedCustomer.bankAccountNumber"
                 class="form-control"
                 placeholder="9999999999999"
-                type="number"
               />
             </div>
           </div>
@@ -241,7 +239,7 @@
             >
               Close
             </button>
-            <button class="btn btn-primary" type="button" @click="handleEdit">
+            <button class="btn btn-primary" type="button" @click="handleUpdate">
               Save changes
             </button>
           </div>
@@ -289,6 +287,7 @@
 <script>
 import moment from "moment";
 import CustomerTableBody from "@/components/customers/CustomerTableBody.vue";
+import customerService from "../services/customer.service";
 
 export default {
   name: "Home",
@@ -303,6 +302,7 @@ export default {
     return {
       customers: [],
       editedCustomer: {},
+      aggregate: {},
       deleteId: "",
       createCustomer: {
         firstName: "",
@@ -317,20 +317,14 @@ export default {
 
   methods: {
     async findAll() {
-      this.customers = [
-        {
-          id: "61d1764569352033502e4c20",
-          firstName: "John",
-          lastName: "Doe",
-          dateOfBirth: "1986-02-28T20:30:00.000Z",
-          phoneNumber: "+49123456789",
-          email: "John@Doe.com",
-          bankAccountNumber: "123456789",
-        },
-      ];
+      this.customers = await customerService
+        .find()
+        .then((response) => response.data.result)
+        .catch((error) => console.log(error));
     },
 
     fillEditCustomer({ customer }) {
+      this.aggregate = { ...customer };
       this.editedCustomer = {
         ...customer,
         dateOfBirth: moment(customer.dateOfBirth).format("YYYY/MM/DD"),
@@ -341,16 +335,30 @@ export default {
       this.deleteId = id;
     },
 
-    handleCreate() {
-      console.log(this.createCustomer);
+    async handleCreate() {
+      await customerService
+        .create(this.createCustomer)
+        .then((response) => response.data.result)
+        .catch((error) => console.log(error));
     },
 
-    handleEdit() {
-      console.log(this.editedCustomer);
+    async handleUpdate() {
+      const updateData = {
+        aggregate: this.aggregate,
+        update: this.editedCustomer,
+      };
+      console.log(updateData);
+      await customerService
+        .update(updateData)
+        .then((response) => response.data.result)
+        .catch((error) => console.log(error.response));
     },
 
-    handleDelete() {
-      console.log(this.deleteId);
+    async handleDelete() {
+      await customerService
+        .delete({ id: this.deleteId })
+        .then((response) => response.data.result)
+        .catch((error) => console.log(error));
     },
   },
 };

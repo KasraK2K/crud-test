@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 require("dotenv").config();
 
 const globalVariables = require("./common/constants");
@@ -16,6 +17,7 @@ class Bootstrap {
   middleware() {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
+    app.use(cors());
   }
 
   config() {
