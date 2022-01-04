@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  mongodb:
+    image : mongo:4.4.10-focal
+    container_name: ${MONGODB_CONTAINER_NAME}
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/kasra/SOFTWARE/MongoDB/database:/data/db
+      - /home/kasra/SOFTWARE/MongoDB/backup:/backup
+    ports:
+      - 27017:27017
+    restart: unless-stopped
