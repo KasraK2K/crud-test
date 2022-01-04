@@ -7,11 +7,11 @@
         data-bs-toggle="modal"
         data-bs-target="#createModal"
       >
-        Create
+        Create Customer
       </button>
 
       <!-- ---------------------------- Table Header ----------------------------- -->
-      <div class="table-responsive">
+      <div class="table-responsive" v-if="customers.length">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -39,6 +39,7 @@
           </tbody>
         </table>
       </div>
+      <h1 v-else>Customers List is Empty</h1>
     </div>
 
     <!-- ---------------------------- Create Modal ----------------------------- -->
@@ -317,6 +318,15 @@ export default {
       editedCustomer: {},
       aggregate: {},
       deleteId: "",
+
+      isolatedCustomer: {
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        phoneNumber: "",
+        email: "",
+        bankAccountNumber: "",
+      },
       createCustomer: {
         firstName: "",
         lastName: "",
@@ -377,10 +387,11 @@ export default {
         .create(this.createCustomer)
         .then((response) => {
           if (response.status === 200) this.findAll();
-
+          this.$toast.success("customer created successfully");
+          this.createCustomer = { ...this.isolatedCustomer };
           return response.data.result;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => this.$toast.error(error.message));
     },
 
     async handleUpdate() {
@@ -393,10 +404,10 @@ export default {
         .update(updateData)
         .then((response) => {
           if (response.status === 200) this.findAll();
-
+          this.$toast.success("customer updated successfully");
           return response.data.result;
         })
-        .catch((error) => console.log(error.response));
+        .catch((error) => this.$toast.error(error.message));
     },
 
     async handleDelete() {
@@ -404,10 +415,10 @@ export default {
         .delete({ id: this.deleteId })
         .then((response) => {
           if (response.status === 200) this.findAll();
-
+          this.$toast.success("customer deleted successfully");
           return response.data.result;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => this.$toast.error(error.message));
     },
   },
 };
