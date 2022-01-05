@@ -127,7 +127,7 @@
                 id="create-bankAccountNumber"
                 v-model="createCustomer.bankAccountNumber"
                 class="form-control"
-                placeholder="9999999999999"
+                placeholder="IE12BOFI90000112345678"
               />
             </div>
           </div>
@@ -234,7 +234,7 @@
                 id="bankAccountNumber"
                 v-model="editedCustomer.bankAccountNumber"
                 class="form-control"
-                placeholder="9999999999999"
+                placeholder="IE12BOFI90000112345678"
               />
             </div>
           </div>
