@@ -1,0 +1,58 @@
+### Find All Customers
+POST http://localhost:3500/customers/find HTTP/1.1
+Content-Type: application/json
+
+{
+  # You can add another Key/Value exists in customer data
+}
+
+
+### Find Specific Customer
+POST http://localhost:3500/customers/findOne HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": "61debc424bd6020ab719579e"
+  # You can add another Key/Value exists in customer data
+}
+
+
+### Create Customer
+POST http://localhost:3500/customers/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Kasra",
+  "lastName": "Karami",
+  "dateOfBirth": null,
+  "phoneNumber": "+989183619290",
+  "email": "Kasra.Karami@outlook.com",
+  "bankAccountNumber": "IE12BOFI90000112345678"
+}
+
+
+### Update Customer
+PATCH http://localhost:3500/customers/update HTTP/1.1
+Content-Type: application/json
+
+{
+  "aggregate": {
+    "id": "61debc424bd6020ab719579e",
+    "firstName": "Kasra",
+    "lastName": "Karami"
+    # You can add another Key/Value exists in customer data
+  },
+  "update": {
+    "firstName": "Hasan"
+  }
+}
+
+
+### Delete Customer
+DELETE http://localhost:3500/customers/delete HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": "61debc424bd6020ab719579e"
+  # You can add another Key/Value exists in customer data
+}

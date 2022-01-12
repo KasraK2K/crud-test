@@ -20,9 +20,12 @@ function main() {
     updateCustomer,
     deleteCustomer,
   });
-  server.bind(process.env.SERVER_URL, grpc.ServerCredentials.createInsecure());
+  server.bind(
+    process.env.GRPC_SERVER_ADDRESS,
+    grpc.ServerCredentials.createInsecure()
+  );
   server.start();
-  console.log(`Server running at ${process.env.SERVER_PORT}`);
+  console.log(`Server running at ${process.env.GRPC_SERVER_PORT}`);
 }
 
 main();
