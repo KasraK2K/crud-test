@@ -47,3 +47,9 @@ This program need `grpc-tools` to install as global package on running server. U
 ```
 npm i -g grpc-tools
 ```
+
+to read and use Rest APIs please install `Rest Client` on your Visual Studio Code and use custommer.http in this path:
+
+```
+/gateway/domain/customer/customer.http
+```
