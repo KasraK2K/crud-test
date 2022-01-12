@@ -1,14 +1,33 @@
-version: "3.8"
+version: "3"
 services:
-  mongodb:
-    image : mongo:4.4.10-focal
+  # MongoDB
+  mongodb-service:
+    image : mongo
     container_name: ${MONGODB_CONTAINER_NAME}
     environment:
       - PUID=1000
       - PGID=1000
     volumes:
-      - /home/kasra/SOFTWARE/MongoDB/database:/data/db
-      - /home/kasra/SOFTWARE/MongoDB/backup:/backup
+      - ./docker/database:/data/db
+      - ./docker/backup:/backup
     ports:
-      - 27017:27017
+      - 27010:27017
+    build: ./docker/build/mongodb-service
     restart: unless-stopped
+  
+  # Node.js
+  database-grpc-service:
+    image: node
+    container_name: ${NODE_CONTAINER_NAME}
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./database:/usr/src/app/database
+    ports:
+      - 127.0.0.1:3500:3500
+      - 127.0.0.1:50051:50051
+    build: ./docker/build/database-grpc-service
+    command: "npm start"
+    depends_on:
+      - mongodb-service
