@@ -1,0 +1,8 @@
+FROM node
+
+COPY ./database/ /app/database/
+WORKDIR /app/database/
+RUN npm install
+EXPOSE 50051
+
+CMD npm start

@@ -1,0 +1,8 @@
+FROM node
+
+COPY ./gateway/ /app/gateway/
+WORKDIR /app/gateway/
+RUN npm install
+EXPOSE 3500
+
+CMD npm start

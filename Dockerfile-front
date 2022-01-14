@@ -1,0 +1,9 @@
+FROM node
+
+COPY ./front/ /app/front/
+WORKDIR /app/front/
+RUN npm install
+RUN npm run serve
+EXPOSE 8080
+
+CMD [ "npm", "serve", "--port 8080" ]
